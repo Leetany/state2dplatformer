@@ -4,6 +4,7 @@ public class EnemyState
 {
     protected EnemyStateMachine stateMachine;
     protected Enemy enemyBase;
+    protected Rigidbody2D rb;
 
     protected bool triggerCalled;
     private string animBoolName;
@@ -20,6 +21,7 @@ public class EnemyState
     {
         triggerCalled = false;
         enemyBase.anim.SetBool(animBoolName, true);
+        rb = enemyBase.rb;
     }
 
     public virtual void Update()
@@ -32,4 +34,8 @@ public class EnemyState
         enemyBase.anim.SetBool(animBoolName, false);
     }
     
+    public virtual void AniamtionFinishTrigger()
+    {
+        triggerCalled = true;
+    }
 }
