@@ -36,10 +36,10 @@ public class SkeletonBattleState : EnemyState
             stateTimer = enemy.battleTime;
             if (enemy.IsPlayerDetected().distance < enemy.attackDistance)
             {
-
                 //공격 상태
                 if(CanAttack())
                     stateMachine.ChangeState(enemy.attackState);
+                return;
             }
         }
         else

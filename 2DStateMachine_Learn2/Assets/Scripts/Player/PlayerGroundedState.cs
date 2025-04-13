@@ -20,6 +20,11 @@ public class PlayerGroundedState : PlayerState
     {
         base.Update();
 
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            stateMachine.ChangeState(player.counterAttackState);
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
             stateMachine.ChangeState(player.primaryAttack);
 
