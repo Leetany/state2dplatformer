@@ -15,11 +15,13 @@ public class Player : Entity
     public float jumpForce;
 
     [Header("대시 정보")]
-    [SerializeField] private float dashCoolDown;
-    private float dashUsageTimer;
+    //[SerializeField] private float dashCoolDown;
+    //private float dashUsageTimer;
     public float dashSpeed;
     public float dashDuration;
     public float dashDir { get; private set; }
+
+    public SkillManager skill { get; private set; }
 
     #region States
     public PlayerStateMachine stateMachine { get; private set; }
@@ -33,6 +35,8 @@ public class Player : Entity
     public PlayerWallJumpState wallJumpState { get; private set; }
     public PlayerPrimaryAttack primaryAttack { get; private set; }
     public PlayerCounterAttackState counterAttackState { get; private set; }
+    public PlayerAimState aimSword { get; private set; }
+    public PlayerCatchSwordState catchSwrod { get; private set; }
 
     #endregion
 
@@ -48,11 +52,15 @@ public class Player : Entity
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
         primaryAttack = new PlayerPrimaryAttack(this, stateMachine, "Attack");
         counterAttackState = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
+        aimSword = new PlayerAimState(this, stateMachine, "AimSword");
+        catchSwrod = new PlayerCatchSwordState(this, stateMachine, "CatchSwrod");
     }
 
     protected override void Start()
     {
         base.Start();
+
+        skill = SkillManager.instance;
 
         stateMachine.Initialize(idleState);
     }
@@ -76,12 +84,12 @@ public class Player : Entity
 
     private void CheckForDashInput()
     {
-        dashUsageTimer -= Time.deltaTime;
+        if (isWallDetected())
+            return;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTimer<0)
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill())
         {
-            dashUsageTimer = dashCoolDown;
-
             dashDir = Input.GetAxisRaw("Horizontal");
 
             if (dashDir == 0)

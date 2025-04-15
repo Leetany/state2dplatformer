@@ -19,7 +19,8 @@ public class SkeletonBattleState : EnemyState
     {
         base.Enter();
 
-        player = GameObject.Find("Player").transform;
+        //player = GameObject.Find("Player").transform;        이 방식보다 아래 방식이 더 좋음 최적화 방면에서도
+        player = PlayerManager.instance.player.transform;
     }
 
     public override void Exit()
