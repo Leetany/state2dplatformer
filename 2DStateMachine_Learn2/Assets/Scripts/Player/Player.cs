@@ -13,6 +13,7 @@ public class Player : Entity
     [Header("이동 정보")]
     public float moveSpeed = 12f;
     public float jumpForce;
+    public float swordReturnImpact;
 
     [Header("대시 정보")]
     //[SerializeField] private float dashCoolDown;
@@ -22,6 +23,8 @@ public class Player : Entity
     public float dashDir { get; private set; }
 
     public SkillManager skill { get; private set; }
+
+    public GameObject sword { get; private set; }
 
     #region States
     public PlayerStateMachine stateMachine { get; private set; }
@@ -36,7 +39,8 @@ public class Player : Entity
     public PlayerPrimaryAttack primaryAttack { get; private set; }
     public PlayerCounterAttackState counterAttackState { get; private set; }
     public PlayerAimState aimSword { get; private set; }
-    public PlayerCatchSwordState catchSwrod { get; private set; }
+    public PlayerCatchSwordState catchSword { get; private set; }
+    public PlayerBlackholeState blackHole { get; private set; }
 
     #endregion
 
@@ -53,7 +57,8 @@ public class Player : Entity
         primaryAttack = new PlayerPrimaryAttack(this, stateMachine, "Attack");
         counterAttackState = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
         aimSword = new PlayerAimState(this, stateMachine, "AimSword");
-        catchSwrod = new PlayerCatchSwordState(this, stateMachine, "CatchSwrod");
+        catchSword = new PlayerCatchSwordState(this, stateMachine, "CatchSword");
+        blackHole = new PlayerBlackholeState(this, stateMachine, "Jump");
     }
 
     protected override void Start()
@@ -71,6 +76,27 @@ public class Player : Entity
 
         stateMachine.currentState.Update();
         CheckForDashInput();
+
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            skill.crystal.CanUseSkill();
+        }
+    }
+
+    public void AssignNewSword(GameObject _newSword)
+    {
+        sword = _newSword;
+    }
+
+    public void ClearTheSword()
+    {
+        stateMachine.ChangeState(catchSword);
+        Destroy(sword);
+    }
+
+    public void ExitBlackHoleAbility()
+    {
+        stateMachine.ChangeState(airState);
     }
 
     public IEnumerator BusyFor(float _seconds)
