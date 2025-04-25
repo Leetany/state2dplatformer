@@ -43,7 +43,7 @@ public class PlayerBlackholeState : PlayerState
 
             if (!skillUsed)
             {
-                if (player.skill.blackHole.CanUseSkill()) ;
+                if (player.skill.blackHole.CanUseSkill())
                     skillUsed = true;
             }
         }

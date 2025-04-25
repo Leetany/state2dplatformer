@@ -57,7 +57,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DissolveAmount: 0.192
+    - _DissolveAmount: 0.072
     - _DissolveScale: 33
     - _EnableExternalAlpha: 0
     - _OutLineThickness: 0.155
