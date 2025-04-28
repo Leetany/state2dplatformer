@@ -21,7 +21,7 @@ public class Enemy_Skeleton : Enemy
         battleState = new SkeletonBattleState(this, stateMachine, "Move", this);    
         attackState = new SkeletonAttackState(this, stateMachine, "Attack", this);
         stunState = new SkeletonStunState(this, stateMachine, "Stun", this);
-        deadState = new SkeletonDeadState(this, stateMachine, "Idle", this);
+        deadState = new SkeletonDeadState(this, stateMachine, "Dead", this);
     }
 
     protected override void Start()
@@ -50,6 +50,7 @@ public class Enemy_Skeleton : Enemy
     public override void Die()
     {
         base.Die();
+        AssignLastAnimName("Dead");
 
         stateMachine.ChangeState(deadState);
     }
