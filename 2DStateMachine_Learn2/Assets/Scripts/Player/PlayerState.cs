@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class PlayerState
+public class PlayerState 
 {
     protected PlayerStateMachine stateMachine;
     protected Player player;
@@ -18,7 +20,7 @@ public class PlayerState
     {
         this.player = _player;
         this.stateMachine = _stateMachine;
-        this.animBoolName = _animBoolName;
+        this.animBoolName= _animBoolName;
     }
 
     public virtual void Enter()
@@ -34,7 +36,8 @@ public class PlayerState
 
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
-        player.anim.SetFloat("yVelocity", rb.linearVelocityY);
+        player.anim.SetFloat("yVelocity", rb.linearVelocity.y);
+
     }
 
     public virtual void Exit()
@@ -46,4 +49,5 @@ public class PlayerState
     {
         triggerCalled = true;
     }
+    
 }

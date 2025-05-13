@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class PlayerStateMachine
+public class PlayerStateMachine 
 {
     public PlayerState currentState { get; private set; }
 
-    //초기화
     public void Initialize(PlayerState _startState)
     {
         currentState = _startState;
@@ -17,5 +18,4 @@ public class PlayerStateMachine
         currentState = _newState;
         currentState.Enter();
     }
-
 }

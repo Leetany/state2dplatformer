@@ -1,67 +1,82 @@
-﻿using System.Collections;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : Entity
 {
     [SerializeField] protected LayerMask whatIsPlayer;
 
-    [Header("스턴 정보")]
+    [Header("Stunned info")]
     public float stunDuration;
     public Vector2 stunDirection;
     protected bool canBeStunned;
     [SerializeField] protected GameObject counterImage;
 
-    [Header("이동 정보")]
+    [Header("Move info")]
     public float moveSpeed;
     public float idleTime;
     public float battleTime;
-    private float defaultmoveSpeed;
+    private float defaultMoveSpeed;
 
-    [Header("공격 정보")]
+    [Header("Attack info")]
     public float attackDistance;
-    public float attackCoolDown;
+    public float attackCooldown;
     [HideInInspector] public float lastTimeAttacked;
 
     public EnemyStateMachine stateMachine { get; private set; }
-    public string lastAnimboolName { get; private set; }
-
+    public string lastAnimBoolName {  get; private set; }
     protected override void Awake()
     {
         base.Awake();
         stateMachine = new EnemyStateMachine();
 
-        defaultmoveSpeed = moveSpeed;
-
+        defaultMoveSpeed = moveSpeed;
     }
 
     protected override void Update()
     {
         base.Update();
 
+
         stateMachine.currentState.Update();
 
     }
 
-    public virtual void AssignLastAnimName(string _animBoolName)
+    public virtual void AssignLastAnimName(string _animBoolName) => lastAnimBoolName = _animBoolName;
+
+
+    public override void SlowEntityBy(float _slowPercentage, float _slowDuration)
     {
-        lastAnimboolName = _animBoolName;
+        moveSpeed = moveSpeed * (1 - _slowPercentage);
+        anim.speed = anim.speed * (1 - _slowPercentage);
+
+        Invoke("ReturnDefaultSpeed", _slowDuration);
+    }
+
+    protected override void ReturnDefaultSpeed()
+    {
+        base.ReturnDefaultSpeed();
+
+        moveSpeed = defaultMoveSpeed;
     }
 
     public virtual void FreezeTime(bool _timeFrozen)
     {
-        if(_timeFrozen)
+        if (_timeFrozen)
         {
             moveSpeed = 0;
             anim.speed = 0;
         }
         else
         {
-            moveSpeed = defaultmoveSpeed;
+            moveSpeed = defaultMoveSpeed;
             anim.speed = 1;
         }
     }
 
-    protected virtual IEnumerator FreezeTimerFor(float _seconds)
+    public virtual void FreezeTimeFor(float _duration) => StartCoroutine(FreezeTimerCoroutine(_duration));
+
+    protected virtual IEnumerator FreezeTimerCoroutine(float _seconds)
     {
         FreezeTime(true);
 
@@ -71,7 +86,6 @@ public class Enemy : Entity
     }
 
     #region Counter Attack Window
-
     public virtual void OpenCounterAttackWindow()
     {
         canBeStunned = true;
@@ -87,18 +101,18 @@ public class Enemy : Entity
 
     public virtual bool CanBeStunned()
     {
-        if(canBeStunned)
+        if (canBeStunned)
         {
             CloseCounterAttackWindow();
             return true;
         }
+
         return false;
     }
 
-    public virtual void AnimationFinishTrigger() => stateMachine.currentState.AniamtionFinishTrigger();
+    public virtual void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
     public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 50, whatIsPlayer);
-
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();

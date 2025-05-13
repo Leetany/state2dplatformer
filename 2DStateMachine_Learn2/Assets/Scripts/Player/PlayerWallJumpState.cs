@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerWallJumpState : PlayerState
 {
@@ -10,7 +12,7 @@ public class PlayerWallJumpState : PlayerState
     {
         base.Enter();
 
-        stateTimer = 0.4f;
+        stateTimer = 1f;
         player.SetVelocity(5 * -player.facingDir, player.jumpForce);
     }
 
@@ -26,7 +28,7 @@ public class PlayerWallJumpState : PlayerState
         if (stateTimer < 0)
             stateMachine.ChangeState(player.airState);
 
-        if (player.IsGroundedDetected())
+        if (player.IsGroundDetected())
             stateMachine.ChangeState(player.idleState);
     }
 }

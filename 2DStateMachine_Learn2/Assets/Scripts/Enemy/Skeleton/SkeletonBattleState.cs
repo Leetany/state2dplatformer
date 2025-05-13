@@ -1,16 +1,15 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class SkeletonBattleState : EnemyState
 {
     private Transform player;
-
     private Enemy_Skeleton enemy;
+    private int moveDir;
 
-    private float moveDir;
 
-    public SkeletonBattleState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName, Enemy_Skeleton _enemy) 
-        : base(_enemy, _stateMachine, _animBoolName)
+    public SkeletonBattleState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName, Enemy_Skeleton _enemy) : base(_enemyBase, _stateMachine, _animBoolName)
     {
         this.enemy = _enemy;
     }
@@ -19,8 +18,42 @@ public class SkeletonBattleState : EnemyState
     {
         base.Enter();
 
-        //player = GameObject.Find("Player").transform;        이 방식보다 아래 방식이 더 좋음 최적화 방면에서도
         player = PlayerManager.instance.player.transform;
+
+        
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (enemy.IsPlayerDetected())
+        {
+            stateTimer = enemy.battleTime;
+
+            if (enemy.IsPlayerDetected().distance < enemy.attackDistance)
+            {
+                if (CanAttack())
+                    stateMachine.ChangeState(enemy.attackState);
+            }
+        }
+        else 
+        {
+            if (stateTimer < 0 || Vector2.Distance(player.transform.position, enemy.transform.position) > 7)
+                stateMachine.ChangeState(enemy.idleState);
+        }
+
+
+
+
+
+
+        if (player.position.x > enemy.transform.position.x)
+            moveDir = 1;
+        else if (player.position.x < enemy.transform.position.x)
+            moveDir = -1;
+
+        enemy.SetVelocity(enemy.moveSpeed * moveDir, rb.linearVelocity.y);
     }
 
     public override void Exit()
@@ -28,42 +61,14 @@ public class SkeletonBattleState : EnemyState
         base.Exit();
     }
 
-    public override void Update()
-    {
-        base.Update();
-
-        if(enemy.IsPlayerDetected())
-        {
-            stateTimer = enemy.battleTime;
-            if (enemy.IsPlayerDetected().distance < enemy.attackDistance)
-            {
-                //공격 상태
-                if(CanAttack())
-                    stateMachine.ChangeState(enemy.attackState);
-                return;
-            }
-        }
-        else
-        {
-            if (stateTimer < 0 || Vector2.Distance(player.transform.position, enemy.transform.position) > 7)
-                stateMachine.ChangeState(enemy.idleState);
-        }
-
-        if (player.position.x > enemy.transform.position.x)
-            moveDir = 1;
-        else if (player.position.x < enemy.transform.position.x)
-            moveDir = -1;
-
-        enemy.SetVelocity(enemy.moveSpeed * moveDir, rb.linearVelocityY);
-    }
-
     private bool CanAttack()
     {
-        if (Time.time >= enemy.lastTimeAttacked+enemy.attackCoolDown)
+        if (Time.time >= enemy.lastTimeAttacked + enemy.attackCooldown)
         {
             enemy.lastTimeAttacked = Time.time;
             return true;
         }
+
         return false;
     }
 }

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerAirState : PlayerState
 {
@@ -20,18 +22,14 @@ public class PlayerAirState : PlayerState
     {
         base.Update();
 
-        if (player.isWallDetected())
-        {
-            stateMachine.ChangeState(player.wallslideState);
-            return;
-        }
 
-        if (player.IsGroundedDetected())
+        if (player.IsWallDetected())
+            stateMachine.ChangeState(player.wallSlide);
+
+        if(player.IsGroundDetected())
             stateMachine.ChangeState(player.idleState);
 
         if (xInput != 0)
-            player.SetVelocity(player.moveSpeed * 0.8f * xInput, rb.linearVelocityY);
-
-
+            player.SetVelocity(player.moveSpeed * .8f * xInput, rb.linearVelocity.y);
     }
 }

@@ -1112,6 +1112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa8401b1293315946b44aa5332dc0c26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entity: {fileID: 0}
+  myStats: {fileID: 0}
+  myTransform: {fileID: 0}
+  slider: {fileID: 0}
 --- !u!1 &589698250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,7 +1559,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 665534678eab12d49a2d9fd63e04a69b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   parallaxEffect: 1
+  xPosition: 0
+  length: 0
 --- !u!1 &805936819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,6 +1595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   scaleFactor: 0.1
+  initialScale: {x: 0, y: 0, z: 0}
 --- !u!114 &805936821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2432,8 +2440,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d34db6f6da34f83418fd308333491564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <anim>k__BackingField: {fileID: 0}
+  <rb>k__BackingField: {fileID: 0}
+  <fx>k__BackingField: {fileID: 0}
+  <sr>k__BackingField: {fileID: 0}
+  <stats>k__BackingField: {fileID: 0}
+  <cd>k__BackingField: {fileID: 0}
   knockbackDirection: {x: 10, y: 0}
   knockbackDuration: 0.1
+  isKnocked: 0
   attackCheck: {fileID: 1701516468}
   attackCheckRadius: 0.8
   groundCheck: {fileID: 1910053673}
@@ -2441,20 +2456,23 @@ MonoBehaviour:
   wallCheck: {fileID: 1129767994}
   wallCheckDistance: 0.8
   whatIsGround:
-    serializedVersion: 2
     m_Bits: 64
+  <facingDir>k__BackingField: 1
+  facingRight: 1
   whatIsPlayer:
-    serializedVersion: 2
     m_Bits: 128
   stunDuration: 1
   stunDirection: {x: 5, y: 6}
+  canBeStunned: 0
   counterImage: {fileID: 1525967784}
   moveSpeed: 2
   idleTime: 1
   battleTime: 2
+  defaultmoveSpeed: 0
   attackDistance: 1.5
   attackCoolDown: 1
   lastTimeAttacked: 0
+  <lastAnimboolName>k__BackingField: 
 --- !u!50 &1129767996
 Rigidbody2D:
   serializedVersion: 5
@@ -2494,8 +2512,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a346210ddfc768640bd8215c845717e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sr: {fileID: 0}
   flashDuration: 0.15
   hitMat: {fileID: 2100000, guid: 46b23eff8cf30ea4ebed1bc15ee265df, type: 2}
+  originalMat: {fileID: 0}
 --- !u!114 &1129767999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2509,6 +2529,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dissolveTime: 0.75
+  _spriteRenderers: {fileID: 0}
+  _materials: {fileID: 0}
+  _dissolveAmount: 690
+  _verticalDissolveAmount: 694
 --- !u!114 &1129768000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2566,7 +2590,14 @@ MonoBehaviour:
   isIgnited: 0
   isChilled: 0
   isShocked: 0
+  ignitedTimer: 0
+  chilledTimer: 0
+  shockedTimer: 0
+  igniteDamageCooldown: 0.3
+  ignitedamageTimer: 0
+  igniteDamage: 0
   currentHealth: 0
+  enemy: {fileID: 0}
 --- !u!70 &1129768001
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2973,7 +3004,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 665534678eab12d49a2d9fd63e04a69b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   parallaxEffect: 0.8
+  xPosition: 0
+  length: 0
 --- !u!1 &1381203257
 GameObject:
   m_ObjectHideFlags: 0
@@ -3004,30 +3038,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1381203257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27d8aec31b36b324490f8e89f1c03c9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7411ddc83aa11924c88728831d04b5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   knockbackDirection: {x: 0, y: 0}
   knockbackDuration: 0
-  attackCheck: {fileID: 2068894704}
-  attackCheckRadius: 0.8
-  groundCheck: {fileID: 1738345921}
-  groundCheckDistance: 0.2
-  wallCheck: {fileID: 694851704}
-  wallCheckDistance: 0.1
+  attackCheck: {fileID: 0}
+  attackCheckRadius: 0
+  groundCheck: {fileID: 0}
+  groundCheckDistance: 0
+  wallCheck: {fileID: 0}
+  wallCheckDistance: 0
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 64
-  attackMovement:
-  - {x: 3, y: 1}
-  - {x: 2, y: 2}
-  - {x: 1, y: 1}
+    m_Bits: 0
+  attackMovement: []
   counterAttackDuration: 0.2
-  moveSpeed: 8
-  jumpForce: 15
-  swordReturnImpact: 7
-  dashSpeed: 25
-  dashDuration: 0.4
+  moveSpeed: 12
+  jumpForce: 0
+  swordReturnImpact: 0
+  dashSpeed: 0
+  dashDuration: 0
 --- !u!4 &1381203259
 Transform:
   m_ObjectHideFlags: 0
@@ -3123,11 +3154,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1381203257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a346210ddfc768640bd8215c845717e7, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e8dc0df107b9164a88d50d6dd9e09a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashDuration: 0.15
-  hitMat: {fileID: 2100000, guid: 46b23eff8cf30ea4ebed1bc15ee265df, type: 2}
+  flashDuration: 0
+  hitMat: {fileID: 0}
+  igniteColor: []
+  chillColor: []
+  shockColor: []
 --- !u!114 &1381203263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3137,11 +3171,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1381203257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28723c9602b967e468824d815c6e4e65, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b16ce086578e2a4b8584f6c57ae28a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   strength:
-    baseValue: 10
+    baseValue: 0
     modifiers: 
   agility:
     baseValue: 0
@@ -3150,10 +3184,10 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   vitality:
-    baseValue: 5
+    baseValue: 0
     modifiers: 
   damage:
-    baseValue: 5
+    baseValue: 0
     modifiers: 
   critChance:
     baseValue: 0
@@ -3162,7 +3196,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   maxHealth:
-    baseValue: 100
+    baseValue: 0
     modifiers: 
   armor:
     baseValue: 0
@@ -3174,18 +3208,122 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   fireDamage:
-    baseValue: 10
+    baseValue: 0
     modifiers: 
   iceDamage:
-    baseValue: 5
+    baseValue: 0
     modifiers: 
-  lighteningDamage:
-    baseValue: 5
+  lightingDamage:
+    baseValue: 0
     modifiers: 
   isIgnited: 0
   isChilled: 0
   isShocked: 0
+  ailmentsDuration: 4
+  shockStrikePrefab: {fileID: 0}
   currentHealth: 0
+--- !u!1 &1383190118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1383190121}
+  - component: {fileID: 1383190120}
+  - component: {fileID: 1383190119}
+  m_Layer: 0
+  m_Name: ItemObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1383190119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383190118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46df77bd4c7fd3d459f9920ace052fdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  itemData: {fileID: 11400000, guid: df82383cd8ee566439ceed01e6482582, type: 2}
+--- !u!212 &1383190120
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383190118}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 948881317
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1383190121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383190118}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.64, y: -0.657647, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1390133638
 GameObject:
   m_ObjectHideFlags: 0
@@ -3288,7 +3426,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 665534678eab12d49a2d9fd63e04a69b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   parallaxEffect: 0.9
+  xPosition: 0
+  length: 0
 --- !u!1 &1407315767
 GameObject:
   m_ObjectHideFlags: 0
@@ -3685,6 +3826,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa8401b1293315946b44aa5332dc0c26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entity: {fileID: 0}
+  myStats: {fileID: 0}
+  myTransform: {fileID: 0}
+  slider: {fileID: 0}
 --- !u!114 &1612288947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61442,6 +61587,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2410b828403cede409478214ee62c9f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <dash>k__BackingField: {fileID: 0}
+  <clone>k__BackingField: {fileID: 0}
+  <sword>k__BackingField: {fileID: 0}
+  <blackHole>k__BackingField: {fileID: 0}
+  <crystal>k__BackingField: {fileID: 0}
 --- !u!114 &2130479267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61455,6 +61605,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
+  cooldownTimer: 0
+  player: {fileID: 0}
   clonePrefabs: {fileID: 4383873633990411840, guid: e93c567fbad64e14986a9fcef8492e48, type: 3}
   cloneDuration: 1.5
   canAttack: 1
@@ -61477,6 +61629,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 1
+  cooldownTimer: 0
+  player: {fileID: 0}
 --- !u!114 &2130479269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61490,6 +61644,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
+  cooldownTimer: 0
+  player: {fileID: 0}
   swordType: 1
   bounceAmount: 10
   bounceGravity: 1
@@ -61505,10 +61661,12 @@ MonoBehaviour:
   swordGravity: 0.5
   freezeTimeDuration: 0.5
   returnSpeed: 12
+  finalDir: {x: 0, y: 0}
   numberOfDots: 20
   spaceBetweenDots: 0.07
   dotPrefab: {fileID: 5620465528432191771, guid: 599a6e1b0244ea94ab142b230d040b01, type: 3}
   dotsParent: {fileID: 1307931183}
+  dots: []
 --- !u!114 &2130479270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61522,6 +61680,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
+  cooldownTimer: 0
+  player: {fileID: 0}
   amountOfAttack: 5
   cloneCooldown: 0.35
   blackholeDuration: 4
@@ -61529,6 +61689,7 @@ MonoBehaviour:
   maxSize: 15
   growSpeed: 3
   shrinkSpeed: 6
+  currentBlackhole: {fileID: 0}
 --- !u!114 &2130479271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61542,8 +61703,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
+  cooldownTimer: 0
+  player: {fileID: 0}
   crystalDuration: 5
   crystalPrefab: {fileID: 8877117598577371744, guid: 97e034e0dd2bba94c913c30d6289ee93, type: 3}
+  currentCrystal: {fileID: 0}
   canExplode: 1
   cloneInsteadOfCrystal: 0
   canMoveToEnemy: 1
@@ -61573,3 +61737,4 @@ SceneRoots:
   - {fileID: 1724556683}
   - {fileID: 1037254634}
   - {fileID: 589698251}
+  - {fileID: 1383190121}

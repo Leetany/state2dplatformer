@@ -1,9 +1,16 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerDeadState : PlayerState
 {
     public PlayerDeadState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
+    }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
     }
 
     public override void Enter()
@@ -20,6 +27,6 @@ public class PlayerDeadState : PlayerState
     {
         base.Update();
 
-        player.ZeroVelocity();
+        player.SetZeroVelocity();
     }
 }

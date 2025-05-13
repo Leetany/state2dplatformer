@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class SkeletonIdleState : SkeletonGroundedState
 {
-    public SkeletonIdleState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName, Enemy_Skeleton _enemy) 
-        : base(_enemyBase, _stateMachine, _animBoolName, _enemy)
+    public SkeletonIdleState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName, Enemy_Skeleton enemy) : base(_enemyBase, _stateMachine, _animBoolName, enemy)
     {
     }
 
@@ -25,5 +26,6 @@ public class SkeletonIdleState : SkeletonGroundedState
 
         if (stateTimer < 0)
             stateMachine.ChangeState(enemy.moveState);
+
     }
 }

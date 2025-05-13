@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class SkeletonMoveState : SkeletonGroundedState
 {
-    public SkeletonMoveState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName, Enemy_Skeleton _enemy) 
-        : base(_enemyBase, _stateMachine, _animBoolName, _enemy)
+    public SkeletonMoveState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName, Enemy_Skeleton enemy) : base(_enemyBase, _stateMachine, _animBoolName, enemy)
     {
     }
 
@@ -21,12 +22,13 @@ public class SkeletonMoveState : SkeletonGroundedState
     {
         base.Update();
 
-        enemy.SetVelocity(enemy.moveSpeed * enemy.facingDir, enemy.rb.linearVelocityY);
+        enemy.SetVelocity(enemy.moveSpeed * enemy.facingDir, rb.linearVelocity.y);
 
-        if(enemy.isWallDetected() || !enemy.IsGroundedDetected())
+        if (enemy.IsWallDetected() || !enemy.IsGroundDetected())
         {
             enemy.Flip();
             stateMachine.ChangeState(enemy.idleState);
         }
+
     }
 }

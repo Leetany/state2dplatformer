@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerWallSlideState : PlayerState
 {
@@ -22,25 +24,21 @@ public class PlayerWallSlideState : PlayerState
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            stateMachine.ChangeState(player.wallJumpState);
+            stateMachine.ChangeState(player.wallJump);
             return;
         }
 
-        if(xInput != 0 && player.facingDir != xInput)
-        {
-            stateMachine.ChangeState(player.idleState);
-        }
+        if (xInput != 0 && player.facingDir != xInput)
+                stateMachine.ChangeState(player.idleState);
 
         if (yInput < 0)
-            player.SetVelocity(0, rb.linearVelocityY);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
         else
-            player.SetVelocity(0, rb.linearVelocityY * 0.7f);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y * .7f);
 
-        if (player.IsGroundedDetected())
-            stateMachine.ChangeState(player.idleState);
-
-        if (!player.isWallDetected())
-            stateMachine.ChangeState(player.idleState);
+        if(player.IsGroundDetected())
+                stateMachine.ChangeState(player.idleState);
 
     }
+
 }

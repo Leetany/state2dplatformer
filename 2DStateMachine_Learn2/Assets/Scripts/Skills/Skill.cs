@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
@@ -6,10 +8,12 @@ public class Skill : MonoBehaviour
     protected float cooldownTimer;
 
     protected Player player;
+    
 
     protected virtual void Start()
     {
         player = PlayerManager.instance.player;
+        
     }
 
     protected virtual void Update()
@@ -17,25 +21,24 @@ public class Skill : MonoBehaviour
         cooldownTimer -= Time.deltaTime;
     }
 
+
     public virtual bool CanUseSkill()
     {
-        if(cooldownTimer < 0)
+        if (cooldownTimer < 0)
         {
-            //스킬사용
             UseSkill();
             cooldownTimer = cooldown;
             return true;
         }
 
-        Debug.Log("Skill is on cooldown");
 
+        Debug.Log("Skill is on cooldown");
         return false;
     }
 
     public virtual void UseSkill()
     {
-        //스킬사용
-
+        // do some skill spesific things
     }
 
     protected virtual Transform FindClosestEnemy(Transform _checkTransform)

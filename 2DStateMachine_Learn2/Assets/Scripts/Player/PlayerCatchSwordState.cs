@@ -1,10 +1,11 @@
-﻿using Unity.VisualScripting;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerCatchSwordState : PlayerState
 {
     private Transform sword;
-
     public PlayerCatchSwordState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
     }
@@ -20,14 +21,16 @@ public class PlayerCatchSwordState : PlayerState
         else if (player.transform.position.x < sword.position.x && player.facingDir == -1)
             player.Flip();
 
-        rb.linearVelocity = new Vector2(player.swordReturnImpact * -player.facingDir, rb.linearVelocityY);
+        rb.linearVelocity = new Vector2(player.swordReturnImpact * -player.facingDir, rb.linearVelocity.y);
+
+            
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        player.StartCoroutine("BusyFor", 0.1f);
+        player.StartCoroutine("BusyFor", .1f);
     }
 
     public override void Update()
@@ -37,4 +40,5 @@ public class PlayerCatchSwordState : PlayerState
         if (triggerCalled)
             stateMachine.ChangeState(player.idleState);
     }
+
 }
